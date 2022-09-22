@@ -10,6 +10,8 @@ class Menu(models.Model):
     dish_type = models.ForeignKey(DishType, on_delete=models.CASCADE)
     dish_comp = models.TextField(blank=True)
     dish_cost = models.PositiveIntegerField()
+    dish_access = models.BooleanField()
+    dish_image = models.ImageField(upload_to="images")
 
 
 class Events(models.Model):
@@ -20,14 +22,6 @@ class Events(models.Model):
     event_about2 = models.TextField(blank=True)
     event_about3 = models.TextField(blank=True)
     event_about_finish = models.TextField(blank=True)
-
-
-class Specials(models.Model):
-    specials_name = models.TextField()
-    specials_title = models.TextField()
-    specials_about1 = models.TextField()
-    specials_about2 = models.TextField(blank=True)
-    specials_image = models.ImageField(upload_to="images")
 
 
 class About(models.Model):
