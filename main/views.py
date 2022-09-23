@@ -3,4 +3,5 @@ from django.http import HttpResponse
 
 
 def start(request):
-    return HttpResponse(f"<h1>Hello</h1>")
+    print(render(request, "main/base.html", {"title": "Головна сторінка"}))
+    return render(request, "main/base.html", {"title": "Головна сторінка"})
