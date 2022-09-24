@@ -3,6 +3,7 @@ from django.db import models
 
 class DishType(models.Model):
     dish_type_name = models.TextField()
+    dish_type_order = models.PositiveIntegerField()
 
 
 class Menu(models.Model):
