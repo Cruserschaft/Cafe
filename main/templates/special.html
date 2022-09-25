@@ -29,7 +29,7 @@
                         <div class="tab-pane active show" id="tab-{{ dish.pk }}">
                             <div class="row">
                               <div class="col-lg-8 details order-2 order-lg-1">
-                                <h3>{{ dish.dish_name }}</h3>
+                                <h3>{{ dish.dish_name }} <s>{{ dish.dish_cost }}</s></h3>
                                 <p class="fst-italic">{{ dish.dish_ingredients }}</p>
                                 <p>{{ dish.dish_about }}</p>
                               </div>
@@ -42,7 +42,7 @@
                         <div class="tab-pane" id="tab-{{ dish.pk }}">
                             <div class="row">
                               <div class="col-lg-8 details order-2 order-lg-1">
-                                <h3>{{ dish.dish_name }}</h3>
+                                <h3>{{ dish.dish_name }} <s>{{ dish.dish_cost }}</s></h3>
                                 <p class="fst-italic">{{ dish.dish_ingredients }}</p>
                                 <p>{{ dish.dish_about }}</p>
                               </div>

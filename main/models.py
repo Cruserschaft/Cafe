@@ -60,3 +60,16 @@ class About(models.Model):
     about_end = models.TextField(blank=True)
 
 
+class Gallery(models.Model):
+    def get_file_name(self, filename):
+        tmp = filename.strip().split('.')[-1]
+        filename = f"{uuid.uuid4()}.{tmp}"
+        return os.path.join('images/gallery/', filename)
+
+    photo = models.ImageField(upload_to=get_file_name)
+    visible = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.photo.__str__()
+
+

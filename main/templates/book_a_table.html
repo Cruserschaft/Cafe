@@ -1,0 +1,50 @@
+<section id="book-a-table" class="book-a-table">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Зарезервуйте <span>Столик</span></h2>
+          <p>Не хочете чекати за дверми? Зарезервуйте столик заздалегідь</p>
+        </div>
+
+        <form action="{% url 'order' %}" method="post" role="form" class="php-email-form">
+            {% csrf_token %}
+          <div class="row">
+            <div class="col-lg-4 col-md-6 form-group">
+              {{ reservation_form.name }}
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
+              {{ reservation_form.email }}
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
+              {{ reservation_form.phone }}
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+              {{ reservation_form.date_order }}
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+              {{ reservation_form.time_order }}
+              <div class="validate"></div>
+            </div>
+            <div class="col-lg-4 col-md-6 form-group mt-3">
+              {{ reservation_form.of_people }}
+              <div class="validate"></div>
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            {{ reservation_form.message }}
+            <div class="validate"></div>
+          </div>
+          <div class="mb-3">
+            <div class="loading">Завантаження</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Ваше звернення зараховано, зачекайте дзвінка менеджера. Дякую, що обрали наше кафе!</div>
+          </div>
+          <div class="text-center"><button type="submit">Надіслати</button></div>
+        </form>
+
+      </div>
+    </section>
