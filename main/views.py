@@ -6,6 +6,16 @@ import random
 
 
 def start(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        email = request.POST["email"]
+        phone = request.POST["phone"]
+        date_order = request.POST["date_order"]
+        time_order = request.POST["time_order"]
+        of_people = request.POST["of_people"]
+        message = request.POST["message"]
+        return HttpResponse(f"{name}, {email}, {phone}, {date_order}, {time_order}, {of_people}, {message};")
+
     categories = DishType.objects.filter(dish_type_access=True)
     dishes = Menu.objects.filter(dish_is_special=False, dish_access=True)
     dishes_specials = Menu.objects.filter(dish_is_special=True, dish_access=True)
@@ -22,12 +32,4 @@ def start(request):
     })
 
 
-def get_order(request):
-    name = request.POST["name"]
-    email = request.POST["email"]
-    phone = request.POST["phone"]
-    date_order = request.POST["date_order"]
-    time_order = request.POST["time_order"]
-    of_people = request.POST["of_people"]
-    message = request.POST["message"]
-    return HttpResponse(f"{name}, {email}, {phone}, {date_order}, {time_order}, {of_people}, {message};")
+
