@@ -17,6 +17,7 @@ class UserReservations(models.Model):
     class Meta:
         ordering = ('-date',)
         verbose_name = "Замовлення"
+        verbose_name_plural = "Замовлення"
 
     def __str__(self):
         return f"{self.name}: {self.phone}: {self.message[:20]}..."
