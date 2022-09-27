@@ -88,3 +88,4 @@ class UserReservationForm(forms.ModelForm):
     class Meta:
         model = UserReservations
         fields = ('name', 'email', 'phone', 'date_order', 'time_order', 'of_people', 'message')
+

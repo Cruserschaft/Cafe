@@ -11,26 +11,32 @@
           <div class="row">
             <div class="col-lg-4 col-md-6 form-group">
               {{ reservation_form.name }}
+                <small>{{ wrong.name }}</small>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
               {{ reservation_form.email }}
+                <small>{{ wrong.email }}</small>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-              {{ reservation_form.phone }}
+               {{ reservation_form.phone }}
+                <small>{{ wrong.phone }}</small>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3">
               {{ reservation_form.date_order }}
+                <small>{{ wrong.date_order }}</small>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3">
               {{ reservation_form.time_order }}
+                <small>{{ wrong.time_order }}</small>
               <div class="validate"></div>
             </div>
             <div class="col-lg-4 col-md-6 form-group mt-3">
               {{ reservation_form.of_people }}
+                <small>{{ wrong.of_people }}</small>
               <div class="validate"></div>
             </div>
           </div>
