@@ -1,0 +1,29 @@
+<section id="testimonials" class="testimonials">
+      <div class="container position-relative">
+
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper">
+            {% for item in testers %}
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src={{ item.test_image.url }} class="testimonial-img" alt="">
+                <h3>{{ item.test_name }}</h3>
+                <h4>{{ item.test_role }}</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  {{ item.test_about }}
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+            {% endfor %}
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section>

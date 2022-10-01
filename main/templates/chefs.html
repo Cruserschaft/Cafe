@@ -1,0 +1,34 @@
+
+<section id="chefs" class="chefs">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Наші професійні <span>Шеф-кухарі</span></h2>
+          <p>Скільки ж вони вчились, щоб готувати так смачно?</p>
+        </div>
+
+        <div class="row">
+            {% for item in chefs %}
+          <div class="col-lg-4 col-md-6">
+            <div class="member">
+              <div class="pic"><img src="{{ item.chefs_image.url }}" class="img-fluid" alt=""></div>
+              <div class="member-info">
+                <h4>{{ item.chefs_name }}</h4>
+                <span>{{ item.chefs_role }}</span>
+                <div class="social">
+                  <a href=""><i class="{{ item.chefs_twitter }}"></i></a>
+                  <a href=""><i class="{{ item.chefs_facebook }}"></i></a>
+                  <a href=""><i class="{{ item.chefs_instagram }}"></i></a>
+                  <a href=""><i class="{{ item.chefs_linkedin }}"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+            {% endfor %}
+
+
+
+        </div>
+
+      </div>
+    </section>

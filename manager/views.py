@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from .models import UserReservations
 
 
-def start(request):
-    return HttpResponse("manager")
+@login_required(login_url="/login/")
+def reservation_list(request):
+    lst = UserReservations.objects.filter(is_processed=False)
+    return render(request, "reservation_list.html", context={"lst":lst})

@@ -1,8 +1,7 @@
 from django import forms
-
 from Cafe import settings
 from manager.models import UserReservations
-import datetime
+import re
 
 
 # use forms.Form where don't use db
@@ -89,7 +88,42 @@ class UserReservationForm(forms.ModelForm):
         })
     )
 
+    def clean_name(self):
+        data = self.cleaned_data["name"]
+        if len(re.findall(r"[A-Za-zА-Яа-яІіЄєЇї\s]{2,30}", data)) == 1:
+            return data
+        raise forms.ValidationError("Enter a valid name.")
+
+    def clean_email(self):
+        data = self.cleaned_data["email"]
+        if len(re.findall(r"[A-Za-z.-]{3,10}@[A-Za-z0-9]{4,}.[a-z]{3}", data)) == 1:
+            return data
+        raise forms.ValidationError("Enter a valid email address.")
+
+    def clean_phone(self):
+        data = self.cleaned_data["phone"]
+        if len(re.findall(r"(\+380?|380?|0)[0-9]{9}", data)) == 1:
+            return data
+        raise forms.ValidationError("Enter a valid phone number.")
+
+    def clean_date_order(self):
+        data = self.data["date_order"]
+        if len(re.findall(r"[0-9]{2}.[0-9]{2}.[0-9]{2,4}", data)) == 1:
+            return self.cleaned_data["date_order"]
+        raise forms.ValidationError("Enter a valid data.")
+
+    def clean_time_order(self):
+        data = self.data["time_order"]
+        if len(re.findall(r"[0-9]{2}[.,:][0-9]{2}$", data)) == 1:
+            return self.cleaned_data["time_order"]
+        raise forms.ValidationError("Enter a valid time.")
+
+    def clean_of_people(self):
+        data = self.cleaned_data["of_people"]
+        if len(re.findall(r"[0-9]{1,2}", str(data))) == 1:
+            return data
+        raise forms.ValidationError("Enter a valid of people.")
+
     class Meta:
         model = UserReservations
         fields = ('name', 'email', 'phone', 'date_order', 'time_order', 'of_people', 'message')
-

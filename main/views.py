@@ -1,17 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import DishType, Menu, Gallery
+from .models import *
 from .forms import UserReservationForm
 import random
 import re
-
-
-class Wrong:
-    wrong = False
-
-
-def validation(regular, value):
-    return len(re.findall(regular, value)) == 1
 
 
 def start(request):
@@ -20,55 +12,37 @@ def start(request):
     dishes_specials = Menu.objects.filter(dish_is_special=True, dish_access=True)
     gallery = Gallery.objects.filter(visible=True)
     gallery = random.choices(gallery, k=4)
+    carousel = Carousel.objects.filter(carousel_access=True)
+    about = About.objects.all()[0]
+    whuus = Whuus.objects.all().order_by("whuus_order")
+    chefs = Chefs.objects.all().order_by("chefs_order")
+    events = Events.objects.all().order_by("event_order")
+    contacts = Contacts.objects.all()[0]
+    testers = Testimonials.objects.all().order_by("test_order")
     user_reservation = UserReservationForm()
-
-    wrong = Wrong()
+    err = None
 
     if request.method == "POST":
-        name_valid = r"[A-Za-zА-Яа-яІіЄєЇї\s]{2,30}"
-        email_valid = r"[A-Za-z.-]{3,10}@[A-Za-z0-9]{4,}.[a-z]{3,3}"
-        phone_valid = r"(\+380?|380?|0)[0-9]{9}"
-        date_valid = r"[0-9]{2}.[0-9]{2}.[0-9]{2,4}"
-        time_valid = r"[0-9]{2}[.,:][0-9]{2}$"
-        of_people_valid = r"[0-9]{1,2}"
+        user_reservation = UserReservationForm(request.POST)
+        err = user_reservation.errors.as_data()
 
-        if not validation(name_valid, request.POST["name"]):
-            wrong.name = "Невірно набране ім'я"
-            wrong.wrong = True
-        if not validation(email_valid, request.POST["email"]):
-            wrong.email = "Невірний емейл"
-            wrong.wrong = True
-        if not validation(phone_valid, request.POST["phone"]):
-            wrong.phone = "Невірний телефон"
-            wrong.wrong = True
-        if not validation(date_valid, request.POST["date_order"]):
-            wrong.date_order = "Невірна дата"
-            wrong.wrong = True
-        if not validation(time_valid, request.POST["time_order"]):
-            wrong.time_order = "Невірний час"
-            wrong.wrong = True
-        if not validation(of_people_valid, request.POST["of_people"]):
-            wrong.of_people = "Невірна кількість місць"
-            wrong.wrong = True
-
-        if wrong.wrong:
-            user_reservation = UserReservationForm(request.POST)
-        else:
-            tmp = UserReservationForm(request.POST)
-            print(tmp.errors.as_data())
-
-            if tmp.is_valid():
-                form_update = tmp.save(commit=True)
-                form_update.save()
-
+        if user_reservation.is_valid():
+            form_update = user_reservation.save(commit=True)
+            form_update.save()
             return redirect("/")
 
     return render(request, "main.html", context={
+        "carousel": carousel,
+        "about": about,
+        "whuus": whuus,
         "category": categories,
         "dishes": dishes,
+        "events": events,
         "special_dishes": dishes_specials,
+        "chefs": chefs,
         "gallery": gallery,
+        "testers": testers,
+        "contacts": contacts,
         "reservation_form": user_reservation,
-        "wrong": wrong,
-
+        "error": err,
     })
