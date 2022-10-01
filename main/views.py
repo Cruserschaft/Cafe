@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import DishType, Menu, Gallery
 from .forms import UserReservationForm
@@ -11,20 +11,18 @@ class Wrong:
 
 
 def validation(regular, value):
-    print(regular)
-    print(value)
-    print(re.findall(regular, value))
     return len(re.findall(regular, value)) == 1
 
 
 def start(request):
-    global wrong
     categories = DishType.objects.filter(dish_type_access=True)
     dishes = Menu.objects.filter(dish_is_special=False, dish_access=True)
     dishes_specials = Menu.objects.filter(dish_is_special=True, dish_access=True)
     gallery = Gallery.objects.filter(visible=True)
     gallery = random.choices(gallery, k=4)
     user_reservation = UserReservationForm()
+
+    wrong = Wrong()
 
     if request.method == "POST":
         name_valid = r"[A-Za-zА-Яа-яІіЄєЇї\s]{2,30}"
@@ -33,8 +31,6 @@ def start(request):
         date_valid = r"[0-9]{2}.[0-9]{2}.[0-9]{2,4}"
         time_valid = r"[0-9]{2}[.,:][0-9]{2}$"
         of_people_valid = r"[0-9]{1,2}"
-
-        wrong = Wrong()
 
         if not validation(name_valid, request.POST["name"]):
             wrong.name = "Невірно набране ім'я"
@@ -58,8 +54,14 @@ def start(request):
         if wrong.wrong:
             user_reservation = UserReservationForm(request.POST)
         else:
-            pass
-            # UserReservationForm(request.POST).save()
+            tmp = UserReservationForm(request.POST)
+            print(tmp.errors.as_data())
+
+            if tmp.is_valid():
+                form_update = tmp.save(commit=True)
+                form_update.save()
+
+            return redirect("/")
 
     return render(request, "main.html", context={
         "category": categories,

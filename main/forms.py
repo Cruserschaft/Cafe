@@ -1,5 +1,8 @@
 from django import forms
+
+from Cafe import settings
 from manager.models import UserReservations
+import datetime
 
 
 # use forms.Form where don't use db
@@ -41,13 +44,14 @@ class UserReservationForm(forms.ModelForm):
         }))
 
     date_order = forms.DateField(
+        input_formats=settings.DATE_INPUT_FORMATS,
         widget=forms.DateInput(attrs={
             'type': "text",
             'name': "date",
             'class': "form-control",
             'id': "date",
             'placeholder': "Дата замовлення",
-            'data-rule': "minlen:4",
+            'data-rule': "minlen:6",
             'data-msg': "Введіть коректну дату",
         })
     )
