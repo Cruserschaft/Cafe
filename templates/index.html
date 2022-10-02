@@ -68,6 +68,10 @@
           <li><a class="nav-link scrollto" href="#gallery">Галерея</a></li>
           <li><a class="nav-link scrollto" href="#chefs">Шеф-кухарі</a></li>
           <li><a class="nav-link scrollto" href="#contact">Контакти</a></li>
+
+          {% if "manager" in user.groups.all.0.name %}
+          <li><a class="nav-link scrollto" href="{% url "manager:reservation_list" %}">Менеджер</a></li>
+          {% endif %}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
